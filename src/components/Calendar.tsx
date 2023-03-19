@@ -1,5 +1,5 @@
 import { type ChangeEvent, type FormEvent, useState } from "react"
-import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus, FaCircle } from 'react-icons/fa'
+import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus } from 'react-icons/fa'
 // import { MdDeleteForever } from 'react-icons/md'
 import { api } from "~/utils/api";
 import {
@@ -22,6 +22,8 @@ import {
 } from 'date-fns'
 
 import AddEventForm from "./AddEventForm";
+import Event from "./Event";
+import Days from "./Days";
 
 const Calendar = () => {
 
@@ -56,7 +58,7 @@ const Calendar = () => {
   //   setMonthBefore(prevMonth)
   //   setMonthAfter(nextMonth)
   // }
-  
+  // 
   // const prevMonth = () => {
   //   const firstDayPrevMonth = subMonths(parse(firstDayCurrentMonth, 'MMM-yyyy', new Date()), 1)
   //   setCurrentMonth(format(firstDayPrevMonth, 'MMM-yyyy'))
@@ -68,7 +70,7 @@ const Calendar = () => {
   //   setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   //   updateMonths(format(firstDayNextMonth, 'MMM-yyyy'))
   // }
-
+ 
   const prevMonth = () => {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
     setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
@@ -135,7 +137,6 @@ const Calendar = () => {
     }
   }
 
-
   return (
     <div className="container">
       <div className="left">
@@ -162,31 +163,15 @@ const Calendar = () => {
                 const isDayInCurrentMonth = isSameMonth(day, firstDayCurrentMonth)
 
                 return (
-                  <div
+                  <Days 
                     key={index}
-                    className={
-                      `day ${isDayActive ? 'active' : ''} 
-                      ${isDayToday ? 'today' : ''} 
-                      ${isDayInCurrentMonth ? '' : 'disabled'}
-                      `
-                    }
-                    onClick={() => setSelectedDay(day)}
-                  >
-                    <div className="top-day">
-                      <span>{format(day, 'd')}</span>
-                    </div>
-                    <div className="mid-day">
-                      {
-                        events.data?.filter((event) => isSameDay(parseISO(event.startDatetime), day)).map((event, index) => {
-                          return (
-                              <h4 className="name-of-event" key={index}>{event.name}</h4>
-                            );
-                          })
-                        }
-                    </div>
-                    <div className="bottom-day">
-                  </div>
-                  </div>
+                    day={day}
+                    isDayActive={isDayActive}
+                    isDayToday={isDayToday}
+                    isDayInCurrentMonth={isDayInCurrentMonth}
+                    setSelectedDay={setSelectedDay}
+                    events={events.data || []}
+                  />
                 )
               })
             }
@@ -209,7 +194,8 @@ const Calendar = () => {
               className="today-btn"
               onClick={goToToday}
               >
-              Today</button>
+              Today
+              </button>
           </div>
         </div>
       </div>
@@ -230,25 +216,13 @@ const Calendar = () => {
           {
             selectedDayEvents !== undefined && selectedDayEvents?.length > 0 
             ? (
-              selectedDayEvents?.map((event) => {
+              selectedDayEvents?.map((event, idx) => {
                 return (
-                  <div className="event" key={event.id} onClick={() => handleDeleteEvent(event.id)}>
-                    <div className="title">
-                      <FaCircle />
-                      <h3 className="event-title">{event.name}</h3>
-                    </div>
-                    <div className="event-time">
-                      <span className="event-time">
-                        <time dateTime={event.startDatetime}>
-                          {format(parseISO(event.startDatetime), 'hh:mm a')}
-                        </time>
-                      <span> - </span>
-                        <time dateTime={event.endDatetime}>
-                          {format(parseISO(event.endDatetime), 'hh:mm a')}
-                        </time>
-                      </span>
-                    </div>
-                  </div>
+                  <Event
+                    key={idx}
+                    event={event} 
+                    handleDeleteEvent={handleDeleteEvent} 
+                    />
                 )
               })
             ) : (

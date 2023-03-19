@@ -1,23 +1,36 @@
 import React from 'react'
+import { format, parseISO } from 'date-fns'
+import { FaCircle } from 'react-icons/fa'
 
 type Event = {
     event: {
-        title: string,
-        time: string
-    }
+        id: string,
+        name: string,
+        startDatetime: string,
+        endDatetime: string
+    },
+    handleDeleteEvent: (id: string) => void
 }
 
-const Event = ({ event: { title, time } } : Event) => {
-  return (
-    <div className="event">
-            <div className="title">
-              <i className="fas fa-circle"></i>
-              <h3 className="event-title">${title}</h3>
-            </div>
-            <div className="event-time">
-              <span className="event-time">${time}</span>
-            </div>
-    </div>
+const Event = ({ event: { id, name, startDatetime, endDatetime }, handleDeleteEvent } : Event) => {
+    return (
+      <div className="event" key={id} onClick={() => handleDeleteEvent(id)}>
+        <div className="title">
+          <FaCircle />
+          <h3 className="event-title">{name}</h3>
+        </div>
+        <div className="event-time">
+          <span className="event-time">
+            <time dateTime={startDatetime}>
+              {format(parseISO(startDatetime), 'hh:mm a')}
+            </time>
+          <span> - </span>
+            <time dateTime={endDatetime}>
+              {format(parseISO(endDatetime), 'hh:mm a')}
+            </time>
+          </span>
+        </div>
+      </div>
   )
 }
 

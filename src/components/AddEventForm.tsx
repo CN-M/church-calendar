@@ -3,14 +3,9 @@ import { api } from "~/utils/api";
 
 import { format } from 'date-fns'
 
+import { type EventFormInput } from "~/types/types";
 
-type Props = {
-  selectedDay: Date,
-  handleModal: () => void
-}
-
-// const AddEventForm = (props: Props) => {
-const AddEventForm = ({ selectedDay, handleModal } : Props) => {
+const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
 
   const trpc = api.useContext()
 
@@ -60,6 +55,7 @@ const AddEventForm = ({ selectedDay, handleModal } : Props) => {
                   type="text"
                   placeholder="Event Time From"
                   className="event-time-from"
+                  maxLength={5}
                   value={eventStartTime}
                   onChange={(e) => setEventStartTime(e.target.value)}
                   required
@@ -70,6 +66,7 @@ const AddEventForm = ({ selectedDay, handleModal } : Props) => {
                   type="text"
                   placeholder="Event Time To"
                   className="event-time-to"
+                  maxLength={5}
                   value={eventEndTime}
                   onChange={(e) => setEventEndTime(e.target.value)}
                   required
