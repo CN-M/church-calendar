@@ -1,13 +1,12 @@
-import { type Session } from "next-auth";
+import { type User } from '@prisma/client'
 
 export type Event = {
-    createdAt: Date;
-    updatedAt: Date;
     id: string;
     name: string;
     startDatetime: string;
     endDatetime: string;
-    // user: User;
+    user?: User & { id: string };
+    userId: string;
 };
 
 export type EventFormInput = {
@@ -22,11 +21,5 @@ export type Day = {
     day: Date,
     setSelectedDay: (day: Date) => void,
     events: Event[]
-    // events: {
-    //     data: Event[]
-    // }
 }
 
-export type userSessionData = {
-    sessionData: Session | null
-  }

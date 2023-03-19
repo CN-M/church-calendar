@@ -17,7 +17,6 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
     onSettled: async () => await trpc.event.getAllEvents.invalidate()
   })
 
-
   const handleAddEvent = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 

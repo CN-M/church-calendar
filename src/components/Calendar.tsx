@@ -1,6 +1,6 @@
 import { type ChangeEvent, type FormEvent, useState } from "react"
-import { type userSessionData } from "~/types/types";
 import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus } from 'react-icons/fa'
+import { useSession } from 'next-auth/react'
 import { api } from "~/utils/api";
 import {
   add,
@@ -25,8 +25,7 @@ import AddEventForm from "./AddEventForm";
 import Event from "./Event";
 import Days from "./Days";
 
-
-const Calendar = ({ sessionData } : userSessionData) => {
+const Calendar = () => {
 
   const trpc = api.useContext()
 
@@ -92,10 +91,6 @@ const Calendar = ({ sessionData } : userSessionData) => {
     setAddEventModal(!addEventModal)
   }
 
-  // const handleCloseModal = () => {
-  //   setAddEventModal(false)
-  // }
-
   const handleDateChange = (e: ChangeEvent<HTMLInputElement> & { inputType: string }) => {
     e.target.value = e.target.value.replace(/[^0-9/]/g, "");
     if (e.target.value.length === 2) {
@@ -132,9 +127,15 @@ const Calendar = ({ sessionData } : userSessionData) => {
     isSameDay(parseISO(event.startDatetime), selectedDay)
   )
 
+  const { data: sessionData } = useSession();
+
+  const isPermitted = sessionData?.user?.role === 'ARCHITECT' || sessionData?.user?.role === 'EDITOR'
+
   const handleDeleteEvent = (id: string) => {
-    if (confirm("Are you sure you want to delete this event?")) {
-      mutate({ id })
+    if (isPermitted) {
+      if (confirm("Are you sure you want to delete this event?")) {
+        mutate({ id })
+      }
     }
   }
 
@@ -223,7 +224,6 @@ const Calendar = ({ sessionData } : userSessionData) => {
                     key={idx}
                     event={event} 
                     handleDeleteEvent={handleDeleteEvent} 
-                    sessionData={sessionData}
                     />
                 )
               })
@@ -243,8 +243,8 @@ const Calendar = ({ sessionData } : userSessionData) => {
         </div>
       </div>
       {
-        sessionData && (
-          <button className="add-event" onClick={handleModal}>
+        sessionData?.user.role === 'EDITOR' || sessionData?.user.role === 'ARCHITECT' && (
+      <button className="add-event" onClick={handleModal}>
         <FaPlus />
       </button>
         )

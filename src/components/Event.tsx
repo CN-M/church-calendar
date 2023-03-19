@@ -1,32 +1,21 @@
 import React from 'react'
 import { format, parseISO } from 'date-fns'
-import { FaCircle, FaTimes } from 'react-icons/fa'
+import { FaCircle } from 'react-icons/fa'
 
-import { type userSessionData } from '~/types/types'
 type Event = {
     event: {
         id: string,
         name: string,
         startDatetime: string,
-        endDatetime: string
+        endDatetime: string,
+        user?: string
     },
     handleDeleteEvent: (id: string) => void,
-    sessionData: userSessionData | null
 }
 
-const Event = ({ event: { id, name, startDatetime, endDatetime }, handleDeleteEvent, sessionData } : Event) => {
-
-  const handleDeletion = (id: string) => {
-    handleDeleteEvent(id)
-  }
-
+const Event = ({ event: { id, name, startDatetime, endDatetime }, handleDeleteEvent } : Event) => {
     return (
-      <div className="event" key={id} onClick={() => handleDeleteEvent(id)}>
-        {/* {sessionData?.user?.role === 'admin' && (
-          <button className="delete-event" onClick={() => handleDeleteEvent(id)}>
-            <FaTimes />
-          </button>
-        )} */}
+      <div className="event" key={id} onDoubleClick={() => handleDeleteEvent(id)} >
         <div className="title">
           <FaCircle />
           <h3 className="event-title">{name}</h3>
