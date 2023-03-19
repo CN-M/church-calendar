@@ -3,13 +3,13 @@ import { z } from "zod";
 import { 
      createTRPCRouter,
      publicProcedure, 
-    //  protectedProcedure
+     protectedProcedure
 } from "../trpc";
 
 export const eventRouter = createTRPCRouter({
     getAllEvents: publicProcedure
         .query(({ ctx }) => {
-            // const userId = ctx.session.user.id
+            // const userId = ctx.session?.user.id
 
             // return ctx.prisma.event.findMany({
             //     where: {
@@ -20,7 +20,7 @@ export const eventRouter = createTRPCRouter({
             return ctx.prisma.event.findMany()
         }),
 
-    createEvent: publicProcedure
+    createEvent: protectedProcedure
         .input(z.object({
             name: z.string(),
             startDatetime: z.string(),
@@ -32,16 +32,16 @@ export const eventRouter = createTRPCRouter({
                     name,
                     startDatetime,
                     endDatetime,
-                    // user: {
-                    //     connect: {
-                    //         id: ctx.session?.user.id
-                    //     }
-                    // },
+                    user: {
+                        connect: {
+                            id: ctx.session?.user.id
+                        }
+                    },
                 }
             })
         }),
 
-    updateEvent: publicProcedure
+    updateEvent: protectedProcedure
         .input(z.object({
             id: z.string(),
             name: z.string({ required_error: 'Fill in all fields' })
@@ -63,7 +63,7 @@ export const eventRouter = createTRPCRouter({
             })
         }),
 
-    deleteEvent: publicProcedure
+    deleteEvent: protectedProcedure
         .input(z.object({ id: z.string() }))
         .mutation(({ ctx, input: { id } }) => {
             return ctx.prisma.event.delete({

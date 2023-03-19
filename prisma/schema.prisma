@@ -55,7 +55,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    // events        Event[]
+    events        Event[]
 }
 
 model VerificationToken {
@@ -73,6 +73,6 @@ model Event {
     name           String 
     startDatetime  String
     endDatetime    String
-    // user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    // userId         String
+    user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId         String
 }

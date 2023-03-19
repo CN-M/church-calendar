@@ -1,3 +1,5 @@
+import { type Session } from "next-auth";
+
 export type Event = {
     createdAt: Date;
     updatedAt: Date;
@@ -24,3 +26,7 @@ export type Day = {
     //     data: Event[]
     // }
 }
+
+export type userSessionData = {
+    sessionData: Session | null
+  }

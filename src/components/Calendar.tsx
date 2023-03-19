@@ -1,6 +1,6 @@
 import { type ChangeEvent, type FormEvent, useState } from "react"
+import { type userSessionData } from "~/types/types";
 import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus } from 'react-icons/fa'
-// import { MdDeleteForever } from 'react-icons/md'
 import { api } from "~/utils/api";
 import {
   add,
@@ -25,7 +25,8 @@ import AddEventForm from "./AddEventForm";
 import Event from "./Event";
 import Days from "./Days";
 
-const Calendar = () => {
+
+const Calendar = ({ sessionData } : userSessionData) => {
 
   const trpc = api.useContext()
 
@@ -222,6 +223,7 @@ const Calendar = () => {
                     key={idx}
                     event={event} 
                     handleDeleteEvent={handleDeleteEvent} 
+                    sessionData={sessionData}
                     />
                 )
               })
@@ -240,9 +242,13 @@ const Calendar = () => {
           <AddEventForm selectedDay={selectedDay}  handleModal={handleModal} />
         </div>
       </div>
-      <button className="add-event" onClick={handleModal}>
+      {
+        sessionData && (
+          <button className="add-event" onClick={handleModal}>
         <FaPlus />
       </button>
+        )
+      }
     </div>
   )
 }

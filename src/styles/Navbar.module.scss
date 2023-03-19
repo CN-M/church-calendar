@@ -1,0 +1,141 @@
+$primary-color: #333;
+$secondary-color: #fff;
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+  background-color: $primary-color;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+
+  .logo {
+    padding: 0 2rem;
+
+    a {
+      color: $secondary-color;
+      text-decoration: none;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      color: $secondary-color;
+      text-decoration: none;
+      letter-spacing: 0.1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $secondary-color;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .signin {
+    padding: 0 2rem;
+
+    a {
+      color: $secondary-color;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
+
+  .burger {
+    display: none;
+    cursor: pointer;
+    padding: 0 2rem;
+
+    div {
+      width: 25px;
+      height: 3px;
+      background-color: $secondary-color;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .nav-links {
+      width: 60%;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    body {
+      overflow-x: hidden;
+    }
+    .nav-links {
+      position: fixed;
+      right: 0px;
+      height: 92vh;
+      top: 8vh;
+      background-color: $primary-color;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 50%;
+      transform: translateX(100%);
+      transition: transform 0.5s ease-in;
+
+      li {
+        opacity: 0;
+      }
+    }
+    .burger {
+      display: block;
+    }
+  }
+
+  &.nav-active {
+    .nav-links {
+      transform: translateX(0%);
+      li {
+        opacity: 1;
+        animation: navLinkFade 0.5s ease forwards;
+        animation-delay: calc(var(--animation-order) * 0.1s);
+      }
+    }
+  }
+
+  @keyframes navLinkFade {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+
+  &.toggle {
+    .line1 {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .line2 {
+      opacity: 0;
+    }
+
+    .line3 {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+  }
+}
