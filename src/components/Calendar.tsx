@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useState } from "react"
+import { type ChangeEvent, type FormEvent, useState, type KeyboardEventHandler } from "react"
 import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
 import { api } from "~/utils/api";
@@ -70,21 +70,6 @@ const Calendar = () => {
     setAddEventModal(!addEventModal)
   }
 
-  const handleDateChange = (e: ChangeEvent<HTMLInputElement> & { inputType: string }) => {
-    e.target.value = e.target.value.replace(/[^0-9/]/g, "");
-    if (e.target.value.length === 2) {
-      e.target.value += '/';
-    }
-  
-    if (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward') {
-      if (e.target.value.length === 3) {
-        e.target.value = e.target.value.slice(0, 2);
-      }
-    }
-  
-    setDesiredDate(e.target.value);
-  };
- 
   const goToDate = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
 
@@ -108,6 +93,17 @@ const Calendar = () => {
         deleteEvent({ id })
       }
     }
+  }
+
+  const modifyInput = (e: ChangeEvent<HTMLInputElement>) => {
+  // const modifyInput = (e: KeyboardEventHandler<HTMLInputElement>) => {
+    if (e.target.value.length === 2)  {
+      e.target.value = e.target.value + '/'
+    } else if (e.target.value.length === 3 && e.target.value.charAt(2) === '/') {
+      e.target.value = e.target.value.replace('/', '');
+    }
+
+    setDesiredDate(e.target.value);
   }
 
   return (
@@ -159,7 +155,7 @@ const Calendar = () => {
                     type="text" 
                     placeholder="mm/yyyy"
                     className="date-input" 
-                    onChange={handleDateChange}
+                    onKeyUp={modifyInput}
                     maxLength={7}
                     />
                   <button type="submit" className="goto-btn">Go</button>

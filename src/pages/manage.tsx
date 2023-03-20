@@ -27,22 +27,6 @@ const Manage = () => {
     onSettled: async () => await trpc.user.getAllUsers.invalidate()
   })
 
-  // const promoteUser = async (id: number) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await axios.post(`/api/users/${id}/promote`);
-  //     const updatedUser = response.data;
-  //     const updatedUsers = users.map((user) =>
-  //       user.id === updatedUser.id ? updatedUser : user
-  //     );
-  //     setUsers(updatedUsers);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const { data: sessionData, status: loading } = useSession();
 
   const isPermitted = sessionData?.user?.role === 'ARCHITECT'
@@ -98,10 +82,10 @@ const Manage = () => {
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
-                  {isPermitted ? (
+                  {isPermitted && user.role !== 'ARCHITECT' ? (
                     <button
                       className={styles.button}
-                      disabled={!isPermitted}
+                      disabled={!isPermitted || user.role === 'ARCHITECT'}
                       onClick={() => handlePromoteUser(user)}
                     >
                       { user.role === 'EDITOR' ? 'Demote' : 'Promote' }

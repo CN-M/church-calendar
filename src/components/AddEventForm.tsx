@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from "react"
+import { type FormEvent, useState, type KeyboardEventHandler, type ChangeEvent } from "react"
 import { api } from "~/utils/api";
 
 import { format } from 'date-fns'
@@ -12,7 +12,8 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
   const [eventName, setEventName] = useState("");
   const [eventStartTime, setEventStartTime] = useState("");
   const [eventEndTime, setEventEndTime] = useState("");
-  const  { mutate } = api.event.createEvent.useMutation({
+  
+  const  { mutate: createEvent } = api.event.createEvent.useMutation({
     onMutate: async () => await trpc.event.getAllEvents.cancel(),
     onSettled: async () => await trpc.event.getAllEvents.invalidate()
   })
@@ -26,7 +27,7 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
       endDatetime: `${format(selectedDay, 'yyyy-MM-dd')}T${eventEndTime}:00.000Z`
     }
 
-    mutate(event)
+    createEvent(event)
 
     setEventEndTime('')
     setEventName('')
@@ -34,6 +35,15 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
     
     handleModal()
   }
+
+  const modifyInput = (e: ChangeEvent<HTMLInputElement>) => {
+    // const modifyInput = (e: KeyboardEventHandler<HTMLInputElement>) => {
+      if (e.target.value.length === 2)  {
+        e.target.value = e.target.value + ':'
+      } else if (e.target.value.length === 3 && e.target.value.charAt(2) === ':') {
+        e.target.value = e.target.value.replace(':', '');
+      }
+    }
 
   return (
     <form onSubmit={handleAddEvent}>
@@ -56,6 +66,7 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
                   className="event-time-from"
                   maxLength={5}
                   value={eventStartTime}
+                  onKeyUp={modifyInput}
                   onChange={(e) => setEventStartTime(e.target.value)}
                   required
                   />
@@ -68,6 +79,7 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
                   maxLength={5}
                   value={eventEndTime}
                   onChange={(e) => setEventEndTime(e.target.value)}
+                  onKeyUp={modifyInput}
                   required
                   />
               </div>
