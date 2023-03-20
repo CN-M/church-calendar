@@ -20,6 +20,7 @@ export type Day = {
     isDayInCurrentMonth: boolean,
     day: Date,
     setSelectedDay: (day: Date) => void,
+    setCurrentMonth: (month: string) => void,
+    firstDayCurrentMonth: Date,
     events: Event[]
 }
-

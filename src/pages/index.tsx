@@ -1,11 +1,18 @@
-import styles from "./index.module.scss";
 import { type NextPage } from "next";
+import { useSession } from 'next-auth/react'
 import Head from "next/head";
-import { signIn, signOut, useSession } from "next-auth/react";
 
 import Calendar from "~/components/Calendar";
+import Navbar from "~/components/Navbar";
 
 const Home: NextPage = () => {
+
+  const { status: loading } = useSession();
+
+  if (loading === 'loading') {
+    return <h2 className='loader'>Loading...</h2>
+  }
+
   return (
     <>
       <Head>
@@ -13,27 +20,11 @@ const Home: NextPage = () => {
         <meta name="description" content="Church Calendar" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <AuthShowcase />
+      <Navbar />
+      <br />
       <Calendar />
     </>
   );
 };
 
 export default Home;
-
-const AuthShowcase: React.FC = () => {
-  const { data: sessionData } = useSession();
-  return (
-    <div className={styles.authContainer}>
-      <p className={styles.showcaseText}>
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-      </p>
-      <button
-        className={styles.loginButton}
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
-    </div>
-  );
-};

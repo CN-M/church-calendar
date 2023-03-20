@@ -31,11 +31,11 @@ const Calendar = () => {
 
   const events = api.event.getAllEvents.useQuery()
 
-  const { mutate } = api.event.deleteEvent.useMutation({
+  const { mutate: deleteEvent } = api.event.deleteEvent.useMutation({
     onMutate: async () => await trpc.event.getAllEvents.cancel(),
     onSettled: async () => await trpc.event.getAllEvents.invalidate()
   })
-  
+
   const today = startOfToday()
 
   const [addEventModal, setAddEventModal] = useState(false)
@@ -43,33 +43,12 @@ const Calendar = () => {
   const [selectedDay, setSelectedDay] = useState(today)
   const [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
 
-  // const [monthBefore, setMonthBefore] = useState(format(subMonths(today, 1), 'MMM-yyyy'));
-  // const [monthAfter, setMonthAfter] = useState(format(addMonths(today, 1), 'MMM-yyyy'));
   const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
   const days = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentMonth),
     end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
   })
-
-  // const updateMonths = (currentMonth: string) => {
-  //   const prevMonth = format(subMonths(parse(currentMonth, 'MMM-yyyy', new Date()), 1), 'MMM-yyyy')
-  //   const nextMonth = format(addMonths(parse(currentMonth, 'MMM-yyyy', new Date()), 1), 'MMM-yyyy')
-  //   setMonthBefore(prevMonth)
-  //   setMonthAfter(nextMonth)
-  // }
-  // 
-  // const prevMonth = () => {
-  //   const firstDayPrevMonth = subMonths(parse(firstDayCurrentMonth, 'MMM-yyyy', new Date()), 1)
-  //   setCurrentMonth(format(firstDayPrevMonth, 'MMM-yyyy'))
-  //   updateMonths(format(firstDayPrevMonth, 'MMM-yyyy'))
-  // }
-  
-  // const nextMonth = () => {
-  //   const firstDayNextMonth = addMonths(parse(firstDayCurrentMonth, 'MMM-yyyy', new Date()), 1)
-  //   setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
-  //   updateMonths(format(firstDayNextMonth, 'MMM-yyyy'))
-  // }
  
   const prevMonth = () => {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
@@ -115,14 +94,6 @@ const Calendar = () => {
     }
   }
 
-  // if (selectedDay && isSameMonth(selectedDay, parse(monthBefore, 'MMM-yyyy', new Date()))) {
-  //   prevMonth()
-  // }
-
-  // if (selectedDay && isSameMonth(selectedDay, parse(monthAfter, 'MMM-yyyy', new Date()))) {
-  //   nextMonth()
-  // }
-
   const selectedDayEvents = events.data?.filter((event) =>
     isSameDay(parseISO(event.startDatetime), selectedDay)
   )
@@ -134,7 +105,7 @@ const Calendar = () => {
   const handleDeleteEvent = (id: string) => {
     if (isPermitted) {
       if (confirm("Are you sure you want to delete this event?")) {
-        mutate({ id })
+        deleteEvent({ id })
       }
     }
   }
@@ -172,6 +143,8 @@ const Calendar = () => {
                     isDayToday={isDayToday}
                     isDayInCurrentMonth={isDayInCurrentMonth}
                     setSelectedDay={setSelectedDay}
+                    setCurrentMonth={setCurrentMonth}
+                    firstDayCurrentMonth={firstDayCurrentMonth}
                     events={events.data || []}
                   />
                 )
@@ -243,7 +216,7 @@ const Calendar = () => {
         </div>
       </div>
       {
-        sessionData?.user.role === 'EDITOR' || sessionData?.user.role === 'ARCHITECT' && (
+        isPermitted && (
       <button className="add-event" onClick={handleModal}>
         <FaPlus />
       </button>

@@ -1,7 +1,13 @@
-import { format, isSameDay, parseISO } from 'date-fns'
+import { format, isSameDay, isSameMonth, parseISO } from 'date-fns'
 import { type Event, type Day } from '~/types/types';
 
-const Days = ({ isDayActive, isDayToday, isDayInCurrentMonth, day, setSelectedDay, events }: Day) => {
+const Days = ({ isDayActive, isDayToday, isDayInCurrentMonth, day, setSelectedDay, setCurrentMonth, firstDayCurrentMonth, events }: Day) => {
+  const SelectingDay = (day: Date) => {
+    if (!isSameMonth(day, firstDayCurrentMonth)) {
+      setCurrentMonth(format(day, 'MMM-yyyy'))
+    }
+    setSelectedDay(day)
+  }
     return (
         <div
           className={
@@ -10,7 +16,7 @@ const Days = ({ isDayActive, isDayToday, isDayInCurrentMonth, day, setSelectedDa
             ${isDayInCurrentMonth ? '' : 'disabled'}
             `
           }
-          onClick={() => setSelectedDay(day)}
+          onClick={() => SelectingDay(day)}
         >
           <div className="top-day">
             <span>{format(day, 'd')}</span>
