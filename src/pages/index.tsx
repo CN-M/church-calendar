@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Church Calendar</title>
+        <title>CRC | Church Calendar</title>
         <meta name="description" content="Church Calendar" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

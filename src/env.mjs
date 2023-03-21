@@ -26,6 +26,7 @@ const server = z.object({
   ROLE_1: z.string(),
   ROLE_2: z.string(),
   ROLE_3: z.string(),
+  YOCO_KEY: z.string(),
 });
 
 /**
@@ -54,6 +55,7 @@ const processEnv = {
   ROLE_1: process.env.ROLE_1,
   ROLE_2: process.env.ROLE_2,
   ROLE_3: process.env.ROLE_3,
+  YOCO_KEY: process.env.YOCO_KEY,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { type NextPage } from "next";
 import { useSession } from 'next-auth/react';
 import styles from '../styles/manage.module.scss';
 
@@ -12,7 +13,7 @@ interface User {
   role: string;
 }
 
-const Manage = () => {
+const Manage: NextPage = () => {
   const trpc = api.useContext()
 
   const users = api.user.getAllUsers.useQuery()

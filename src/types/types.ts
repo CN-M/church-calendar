@@ -24,3 +24,8 @@ export type Day = {
     firstDayCurrentMonth: Date,
     events: Event[]
 }
+
+export type Payment = {
+    token: string;
+    amountInCents: number;
+};
