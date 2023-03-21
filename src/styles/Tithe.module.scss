@@ -1,0 +1,115 @@
+/* CSS */
+
+.tithe {
+    height: 100vh;
+    width: 100vw;
+    background-color: rebeccapurple;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+
+    h1, h2 {
+        color: #fff;
+        text-align: center;
+    }
+
+    h2 {
+        margin-top: 2.5rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 0.5rem;
+
+        
+    }
+
+    input {
+        height: 3rem;
+        width: 20rem;
+        border-radius: 0.5rem;
+        border: none;
+        padding: 0 0.5rem;
+        margin: 1rem 0;
+        font-size: 1.5rem;
+        background-color: #fff;
+        color: #000;
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+
+.buttonS4 {
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 3px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.buttonS4:active,
+.buttonS4:hover {
+  outline: 0;
+}
+
+.buttonS4 span {
+  background-color: rgb(5, 6, 45);
+  padding: 16px 24px;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+
+.buttonS4:hover span {
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .buttonS4 {
+    font-size: 24px;
+    min-width: 196px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+    .tithe {
+        h2 {
+            margin-top: 2.5rem;
+        }
+    }
+}
+    

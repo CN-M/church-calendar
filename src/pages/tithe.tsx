@@ -1,4 +1,8 @@
 /* eslint-disable @next/next/no-sync-scripts */
+import styles from '../styles/Tithe.module.scss';
+
+const { buttonS4, inputs } = styles
+
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -66,17 +70,25 @@ const Tithe: NextPage = () => {
             <meta name="description" content="Pay Tithe" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
-        <div>Thank You for Your Generosity!</div>
+        <div className={styles.tithe}>
         <div>
+          <h1>
+          Thank You for Your Generosity🙌
+          </h1>
+        </div>
             <form>
               {
                 sessionData?.user?.name || sessionData?.user?.email
-                ? ( <div><h2>{sessionData?.user?.name ? sessionData?.user?.name : sessionData?.user?.email}</h2></div> )
+                ? ( <div><h2>Tithing as: {sessionData?.user?.name ? sessionData?.user?.name : sessionData?.user?.email}</h2></div> )
                 : (<div><input onChange={(e) => setNameOfTither(e.target.value)} type="text" name="name" placeholder="Name" /></div>)
               }
-              <div><input onChange={(e) => setAmountInCents(parseInt(e.target.value) * 100)} type="text" name="amount" placeholder="Amount" /></div>
+              <div className={inputs}><input onChange={(e) => setAmountInCents(parseInt(e.target.value) * 100)} type="text" name="amount" placeholder="100.00" /></div>
             </form>
-            <button onClick={handleCheckoutClick}>Pay</button>
+            <button className={buttonS4} onClick={handleCheckoutClick}>
+              <span>
+              Pay
+              </span>
+              </button>
         </div>
     </>
   )
