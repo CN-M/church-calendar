@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useState, type KeyboardEventHandler } from "react"
+import { type FormEvent, useState, type KeyboardEvent } from "react"
 import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
 import { api } from "~/utils/api";
@@ -96,15 +96,14 @@ const Calendar = () => {
     }
   }
 
-  const modifyInput = (e: ChangeEvent<HTMLInputElement>) => {
-  // const modifyInput = (e: KeyboardEventHandler<HTMLInputElement>) => {
-    if (e.target.value.length === 2)  {
-      e.target.value = e.target.value + '/'
-    } else if (e.target.value.length === 3 && e.target.value.charAt(2) === '/') {
-      e.target.value = e.target.value.replace('/', '');
+  const modifyInput = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.currentTarget.value.length === 2)  {
+      e.currentTarget.value = e.currentTarget.value + '/'
+    } else if (e.currentTarget.value.length === 3 && e.currentTarget.value.charAt(2) === '/') {
+      e.currentTarget.value = e.currentTarget.value.replace('/', '');
     }
 
-    setDesiredDate(e.target.value);
+    setDesiredDate(e.currentTarget.value);
   }
 
   return (
