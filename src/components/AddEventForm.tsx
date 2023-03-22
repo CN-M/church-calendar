@@ -1,5 +1,5 @@
 import styles from '../styles/Calendar.module.scss'
-import { type FormEvent, useState, type KeyboardEventHandler, type ChangeEvent } from "react"
+import { type FormEvent, useState, type KeyboardEvent } from "react"
 import { api } from "~/utils/api";
 
 import { format } from 'date-fns'
@@ -37,14 +37,14 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
     handleModal()
   }
 
-  const modifyInput = (e: ChangeEvent<HTMLInputElement>) => {
-    // const modifyInput = (e: KeyboardEventHandler<HTMLInputElement>) => {
-      if (e.target.value.length === 2)  {
-        e.target.value = e.target.value + ':'
-      } else if (e.target.value.length === 3 && e.target.value.charAt(2) === ':') {
-        e.target.value = e.target.value.replace(':', '');
+    const modifyInput = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.currentTarget.value.length === 2)  {
+        e.currentTarget.value = e.currentTarget.value + ':';
+      } else if (e.currentTarget.value.length === 3 && e.currentTarget.value.charAt(2) === ':') {
+        e.currentTarget.value = e.currentTarget.value.replace(':', '');
       }
     }
+    
 
   return (
     <form onSubmit={handleAddEvent}>
