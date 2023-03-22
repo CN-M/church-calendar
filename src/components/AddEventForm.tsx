@@ -1,3 +1,4 @@
+import styles from '../styles/Calendar.module.scss'
 import { type FormEvent, useState, type KeyboardEventHandler, type ChangeEvent } from "react"
 import { api } from "~/utils/api";
 
@@ -47,23 +48,23 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
 
   return (
     <form onSubmit={handleAddEvent}>
-            <div className="add-event-body">
-              <div className="add-event-input">
+            <div className={styles.addEventBody}>
+              <div className={styles.addEventInput}>
                 <input 
                   type="text" 
                   placeholder="Event Name" 
-                  className="event-name" 
+                  className={styles.eventName} 
                   maxLength={50}
                   value={eventName}
                   onChange={(e) => setEventName(e.target.value)}
                   required
                   />
               </div>
-              <div className="add-event-input">
+              <div className={styles.addEventInput}>
                 <input
                   type="text"
                   placeholder="Event Time From"
-                  className="event-time-from"
+                  className={styles.eventTimeFrom}
                   maxLength={5}
                   value={eventStartTime}
                   onKeyUp={modifyInput}
@@ -71,11 +72,11 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
                   required
                   />
               </div>
-              <div className="add-event-input">
+              <div className={styles.addEventInput}>
                 <input
                   type="text"
                   placeholder="Event Time To"
-                  className="event-time-to"
+                  className={styles.eventTimeTo}
                   maxLength={5}
                   value={eventEndTime}
                   onChange={(e) => setEventEndTime(e.target.value)}
@@ -84,9 +85,9 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
                   />
               </div>
             </div>
-            <div className="add-event-footer">
+            <div className={styles.addEventFooter}>
               <button 
-                className="add-event-btn">Add Event</button>
+                className={styles.addEventBtn}>Add Event</button>
             </div>
           </form>
   )

@@ -2,6 +2,7 @@ import { type ChangeEvent, type FormEvent, useState, type KeyboardEventHandler }
 import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
 import { api } from "~/utils/api";
+import styles from '../styles/Calendar.module.scss'
 import {
   add,
   eachDayOfInterval,
@@ -107,15 +108,15 @@ const Calendar = () => {
   }
 
   return (
-    <div className="container">
-      <div className="left">
-        <div className="calendar">
-          <div className="month">
+    <div className={styles.container}>
+      <div className={styles.left}>
+        <div className={styles.calendar}>
+          <div className={styles.month}>
           <FaChevronLeft onClick={prevMonth} />
-          <div className="date">{format(firstDayCurrentMonth, 'MMMM yyyy')}</div>
+          <div className={styles.date}>{format(firstDayCurrentMonth, 'MMMM yyyy')}</div>
           <FaChevronRight onClick={nextMonth} />
           </div>
-          <div className="weekdays">
+          <div className={styles.weekdays}>
             <div>Sun</div>
             <div>Mon</div>
             <div>Tue</div>
@@ -124,7 +125,7 @@ const Calendar = () => {
             <div>Fri</div>
             <div>Sat</div>
           </div>
-          <div className="days">
+          <div className={styles.days}>
             {
               days.map((day, index) => {
                 const isDayActive = isSameDay(day, selectedDay)
@@ -147,22 +148,22 @@ const Calendar = () => {
               })
             }
           </div>
-          <div className="goto-today">
+          <div className={styles.gotoToday}>
             {/* <div /> */}
             <form onSubmit={goToDate}>
-              <div className="goto">
+              <div className={styles.goto}>
                   <input 
                     type="text" 
                     placeholder="mm/yyyy"
-                    className="date-input" 
+                    className={styles.dateInput} 
                     onKeyUp={modifyInput}
                     maxLength={7}
                     />
-                  <button type="submit" className="goto-btn">Go</button>
+                  <button type="submit" className={styles.gotoBtn}>Go</button>
               </div>
             </form>
             <button 
-              className="today-btn"
+              className={styles.todayBtn}
               onClick={goToToday}
               >
               Today
@@ -170,20 +171,20 @@ const Calendar = () => {
           </div>
         </div>
       </div>
-      <div className="right">
-        <div className="today-date">
-          <div className="event-day">
+      <div className={styles.right}>
+        <div className={styles.todayDate}>
+          <div className={styles.eventDay}>
             <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
               { format(selectedDay, 'EE') }
             </time>
           </div>
-          <div className="event-date">
+          <div className={styles.eventDate}>
               <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
                 {format(selectedDay, 'do MMMM yyy')}
               </time>
           </div>
         </div>
-        <div className="events">
+        <div className={styles.events}>
           {
             selectedDayEvents !== undefined && selectedDayEvents?.length > 0 
             ? (
@@ -197,23 +198,23 @@ const Calendar = () => {
                 )
               })
             ) : (
-              <div className="no-event">
+              <div className={styles.noEvent}>
                 <h3>No Events</h3>
               </div>
             )
           }
         </div>
-        <div className={`add-event-wrapper ${addEventModal ? 'active' : ''}`}>
-          <div className="add-event-header">
-            <div className="title">Add Event</div>
-            <FaTimes className='close' onClick={handleModal} />
+        <div className={`${styles.addEventWrapper} ${addEventModal ? styles.active : ''}`}>
+          <div className={styles.addEventHeader}>
+            <div className={styles.title}>Add Event</div>
+            <FaTimes className={styles.close} onClick={handleModal} />
           </div>
           <AddEventForm selectedDay={selectedDay}  handleModal={handleModal} />
         </div>
       </div>
       {
         isPermitted && (
-      <button className="add-event" onClick={handleModal}>
+      <button className={styles.addEvent} onClick={handleModal}>
         <FaPlus />
       </button>
         )

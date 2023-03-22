@@ -16,7 +16,11 @@ const Navbar = () => {
       </div>
       <ul className={navLinks}>
         <Link href="/tithe">Tithe</Link>
-        {/* <li><a href="#">Link 2</a></li> */}
+        {
+          sessionData?.user.role === 'ARCHITECT' && (
+            <Link href="/manage">Manage</Link>
+          )
+        }
         {/* <li><a href="#">Link 3</a></li> */}
       </ul>
       <div className={signInLink}>

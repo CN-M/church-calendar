@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import styles from '../styles/Tithe.module.scss';
+import TitheLayout from '../components/TitheLayout'
 
 const { buttonS4, inputs } = styles
 
@@ -64,33 +65,33 @@ const Tithe: NextPage = () => {
   };
 
   return (
-    <>
+    <TitheLayout>
         <Head>
             <title>CRC | Tithe</title>
             <meta name="description" content="Pay Tithe" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <div className={styles.tithe}>
-        <div>
-          <h1>
-          Thank You for Your Generosity🙌
-          </h1>
+          <div>
+            <h1>
+            Thank You for Your Generosity🙌
+            </h1>
+          </div>
+          <form>
+            {
+              sessionData?.user?.name || sessionData?.user?.email
+              ? ( <div><h2>Tithing as: {sessionData?.user?.name ? sessionData?.user?.name : sessionData?.user?.email}</h2></div> )
+              : (<div><input onChange={(e) => setNameOfTither(e.target.value)} type="text" name="name" placeholder="Name" /></div>)
+            }
+            <div className={inputs}><input onChange={(e) => setAmountInCents(parseInt(e.target.value) * 100)} type="text" name="amount" placeholder="100.00" /></div>
+          </form>
+          <button className={buttonS4} onClick={handleCheckoutClick}>
+            <span>
+            Pay
+            </span>
+          </button>
         </div>
-            <form>
-              {
-                sessionData?.user?.name || sessionData?.user?.email
-                ? ( <div><h2>Tithing as: {sessionData?.user?.name ? sessionData?.user?.name : sessionData?.user?.email}</h2></div> )
-                : (<div><input onChange={(e) => setNameOfTither(e.target.value)} type="text" name="name" placeholder="Name" /></div>)
-              }
-              <div className={inputs}><input onChange={(e) => setAmountInCents(parseInt(e.target.value) * 100)} type="text" name="amount" placeholder="100.00" /></div>
-            </form>
-            <button className={buttonS4} onClick={handleCheckoutClick}>
-              <span>
-              Pay
-              </span>
-              </button>
-        </div>
-    </>
+    </TitheLayout>
   )
 }
 
