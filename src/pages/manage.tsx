@@ -83,7 +83,8 @@ const Manage: NextPage = () => {
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
-                  {isPermitted && user.role !== 'ARCHITECT' ? (
+                {
+                  isPermitted && user.role !== 'ARCHITECT' ? (
                     <button
                       className={styles.button}
                       disabled={!isPermitted || user.role === 'ARCHITECT'}
