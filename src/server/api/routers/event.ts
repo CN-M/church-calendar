@@ -9,14 +9,6 @@ import {
 export const eventRouter = createTRPCRouter({
     getAllEvents: publicProcedure
         .query(({ ctx }) => {
-            // const userId = ctx.session?.user.id
-
-            // return ctx.prisma.event.findMany({
-            //     where: {
-            //         userId
-            //     },
-            // })
-
             return ctx.prisma.event.findMany()
         }),
 

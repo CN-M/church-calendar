@@ -21,7 +21,6 @@ const Navbar = () => {
             <Link href="/manage">Manage</Link>
           )
         }
-        {/* <li><a href="#">Link 3</a></li> */}
       </ul>
       <div className={signInLink}>
         <a 
