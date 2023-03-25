@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { env } from "~/env.mjs";
 
 import { 
      createTRPCRouter,
@@ -19,6 +20,10 @@ export const eventRouter = createTRPCRouter({
             endDatetime: z.string(),
         }))
         .mutation(({ ctx, input: { name, startDatetime, endDatetime } }) => {
+            if (ctx.session?.user.role !== env.ROLE_3 || ctx.session?.user.role !== env.ROLE_2) {
+                throw new Error('You do not have permission to perform this action')
+            }
+
             return ctx.prisma.event.create({
                 data: {
                     name,
@@ -43,6 +48,10 @@ export const eventRouter = createTRPCRouter({
             endDatetime: z.string(),
         }))
         .mutation(({ ctx, input: { id, name, startDatetime, endDatetime } }) => {
+            if (ctx.session?.user.role !== env.ROLE_3 || ctx.session?.user.role !== env.ROLE_2) {
+                throw new Error('You do not have permission to perform this action')
+            }
+
             return ctx.prisma.event.update({
                 where: {
                     id
@@ -58,6 +67,10 @@ export const eventRouter = createTRPCRouter({
     deleteEvent: protectedProcedure
         .input(z.object({ id: z.string() }))
         .mutation(({ ctx, input: { id } }) => {
+            if (ctx.session?.user.role !== env.ROLE_3 || ctx.session?.user.role !== env.ROLE_2) {
+                throw new Error('You do not have permission to perform this action')
+            }
+
             return ctx.prisma.event.delete({
                 where: {
                     id
