@@ -79,10 +79,13 @@ const Tithe: NextPage = () => {
           </div>
           <form>
             {
-              sessionData?.user?.name || sessionData?.user?.email
-              ? ( <div><h2>Tithing as: {sessionData?.user?.name ? sessionData?.user?.name : sessionData?.user?.email}</h2></div> )
-              : (<div><input onChange={(e) => setNameOfTither(e.target.value)} type="text" name="name" placeholder="Name" /></div>)
-            }
+              ( sessionData?.user?.name || sessionData?.user?.email ) &&
+               ( <div><h2>Tithing as: {sessionData?.user?.name ? sessionData?.user?.name : sessionData?.user?.email}</h2></div> )
+              }
+              {
+              ( !sessionData?.user?.name && !sessionData?.user?.email ) &&
+                (<div><input onChange={(e) => setNameOfTither(e.target.value)} type="text" name="name" placeholder="Name" /></div>)
+              }
             <div className={inputs}><input onChange={(e) => setAmountInCents(parseInt(e.target.value) * 100)} type="text" name="amount" placeholder="100.00" /></div>
           </form>
           <button className={buttonS4} onClick={handleCheckoutClick}>
