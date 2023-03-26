@@ -13,8 +13,7 @@ import { api } from "~/utils/api";
 import toast from "react-hot-toast";
 
 const Tithe: NextPage = () => {
-
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status: loading } = useSession();
 
   const { mutate: payTithe } = api.tithe.payTithe.useMutation({})
   const { mutate: payGeneralTithe } = api.tithe.payGeneralTithe.useMutation({})
@@ -64,6 +63,10 @@ const Tithe: NextPage = () => {
     });
   };
 
+  if (loading === 'loading') {
+    return <h2 className='loader'>Loading...</h2>
+  }
+
   return (
     <TitheLayout>
         <Head>
@@ -79,13 +82,10 @@ const Tithe: NextPage = () => {
           </div>
           <form>
             {
-              ( sessionData?.user?.name || sessionData?.user?.email ) &&
-               ( <div><h2>Tithing as: {sessionData?.user?.name ? sessionData?.user?.name : sessionData?.user?.email}</h2></div> )
-              }
-              {
-              ( !sessionData?.user?.name && !sessionData?.user?.email ) &&
-                (<div><input onChange={(e) => setNameOfTither(e.target.value)} type="text" name="name" placeholder="Name" /></div>)
-              }
+              sessionData?.user?.name || sessionData?.user?.email
+              ? ( <div><h2>Tithing as: {sessionData?.user?.name ? sessionData?.user?.name : sessionData?.user?.email}</h2></div> )
+              : (<div><input onChange={(e) => setNameOfTither(e.target.value)} type="text" name="name" placeholder="Name" /></div>)
+            }
             <div className={inputs}><input onChange={(e) => setAmountInCents(parseInt(e.target.value) * 100)} type="text" name="amount" placeholder="100.00" /></div>
           </form>
           <button className={buttonS4} onClick={handleCheckoutClick}>
