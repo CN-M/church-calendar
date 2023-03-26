@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { env } from "~/env.mjs";
-
 import { 
      createTRPCRouter,
      publicProcedure, 
@@ -20,7 +19,8 @@ export const eventRouter = createTRPCRouter({
             endDatetime: z.string(),
         }))
         .mutation(({ ctx, input: { name, startDatetime, endDatetime } }) => {
-            if (ctx.session?.user.role !== env.ROLE_3 || ctx.session?.user.role !== env.ROLE_2) {
+            // if (ctx.session?.user.role !== env.ROLE_3 || ctx.session?.user.role !== env.ROLE_2) {
+            if (ctx.session?.user.role !== env.ROLE_3) {
                 throw new Error('You do not have permission to perform this action')
             }
 
