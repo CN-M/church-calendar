@@ -191,17 +191,17 @@
   .calendar .days .event {
     position: relative;
   }
-  .calendar .days .event::after {
-    content: "";
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    width: 75%;
-    height: 6px;
-    border-radius: 30px;
-    transform: translateX(-50%);
-    background-color: var(--primary-clr);
-  }
+  // .calendar .days .event::after {
+  //   content: "";
+  //   position: absolute;
+  //   bottom: 10%;
+  //   left: 50%;
+  //   width: 75%;
+  //   height: 6px;
+  //   border-radius: 30px;
+  //   transform: translateX(-50%);
+  //   background-color: var(--primary-clr);
+  // }
   .calendar .days .day:hover.event::after {
     background-color: #fff;
   }
@@ -534,6 +534,10 @@
   }
 
   @media screen and (min-width: 501px) {
+    // .smallScreen {
+    //   display: none;
+    // }
+
     .nameOfEvent {
       padding: 0.3rem;
     }
@@ -544,6 +548,26 @@
   }
   
   @media screen and (max-width: 500px) {
+    .calendar .days .event::after {
+      content: "";
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      // width: 75%;
+      width: 30%;
+      height: 6px;
+      border-radius: 30px;
+      transform: translateX(-50%);
+      background-color: var(--primary-clr);
+    }
+
+    .smallScreen {
+      .nameOfEvent {
+        display: none;
+        // padding: 0.3rem;
+      }
+  
+    }
    
     .calendar .month {
       height: 75px;
