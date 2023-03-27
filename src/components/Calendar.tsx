@@ -2,6 +2,7 @@ import { type FormEvent, useState, type KeyboardEvent } from "react"
 import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
 import { api } from "~/utils/api";
+import { toast } from "react-hot-toast";
 import styles from '../styles/Calendar.module.scss'
 import {
   add,
@@ -29,6 +30,11 @@ const Calendar = () => {
   const events = api.event.getAllEvents.useQuery()
 
   const { mutate: deleteEvent } = api.event.deleteEvent.useMutation({
+    onError(err) {
+      if (err.message === 'UNAUTHORIZED') {
+        toast.error('You are not authorized to delete this event')
+      }
+    },
     onMutate: async () => await trpc.event.getAllEvents.cancel(),
     onSettled: async () => await trpc.event.getAllEvents.invalidate()
   })

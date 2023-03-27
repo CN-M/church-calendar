@@ -3,6 +3,7 @@ import { type FormEvent, useState, type KeyboardEvent } from "react"
 import { api } from "~/utils/api";
 
 import { format } from 'date-fns'
+import { toast } from 'react-hot-toast';
 
 import { type EventFormInput } from "~/types/types";
 
@@ -15,6 +16,11 @@ const AddEventForm = ({ selectedDay, handleModal } : EventFormInput) => {
   const [eventEndTime, setEventEndTime] = useState("");
   
   const  { mutate: createEvent } = api.event.createEvent.useMutation({
+    onError(err) {
+      if (err.message === 'UNAUTHORIZED') {
+        toast.error('You are not authorized to add events')
+      }
+    },
     onMutate: async () => await trpc.event.getAllEvents.cancel(),
     onSettled: async () => await trpc.event.getAllEvents.invalidate()
   })

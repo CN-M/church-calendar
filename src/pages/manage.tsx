@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { type NextPage } from "next";
 import { useSession } from 'next-auth/react';
+import { toast } from 'react-hot-toast';
 import styles from '../styles/manage.module.scss';
 
 import { api } from '~/utils/api';
@@ -19,11 +20,21 @@ const Manage: NextPage = () => {
   const users = api.user.getAllUsers.useQuery()
 
   const { mutate: promoteUser } = api.user.promoteUser.useMutation({
+    onError(err) {
+      if (err.message === 'UNAUTHORIZED') {
+        toast.error('You are not authorized to promote users')
+      }
+    },
     onMutate: async () => await trpc.user.getAllUsers.cancel(),
     onSettled: async () => await trpc.user.getAllUsers.invalidate()
   })
 
   const { mutate: demoteUser } = api.user.demoteUser.useMutation({
+    onError(err) {
+      if (err.message === 'UNAUTHORIZED') {
+        toast.error('You are not authorized to demote users')
+      }
+    },
     onMutate: async () => await trpc.user.getAllUsers.cancel(),
     onSettled: async () => await trpc.user.getAllUsers.invalidate()
   })

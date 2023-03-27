@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { env } from "~/env.mjs";
-
 import { 
      createTRPCRouter,
      protectedProcedure
@@ -43,6 +42,8 @@ export const userRouter = createTRPCRouter({
             if (ctx.session?.user.role !== env.ROLE_3) {
                 throw new Error('You do not have permission to perform this action')
             }
+
+
 
             return ctx.prisma.user.update({
                 where: {

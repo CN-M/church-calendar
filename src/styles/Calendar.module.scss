@@ -166,7 +166,7 @@
   }
   .calendar .days .active {
     position: relative;
-    font-size: 1.2rem;
+    // font-size: 1.2rem;
     color: #fff;
     background-color: var(--primary-clr);
   }
@@ -180,7 +180,13 @@
     box-shadow: 0 0 10px 2px var(--primary-clr);
   }
   .calendar .days .today {
-    font-size: 2rem;
+    // font-size: 2rem;
+    // position: relative;
+    // font-size: 1.2rem;
+    // box-shadow: 0 0 10px 2px var(--primary-clr);
+    box-shadow: 0 0 10px 2px steelblue;
+    // color: #fff;
+    // background-color: var(--primary-clr);
   }
   .calendar .days .event {
     position: relative;

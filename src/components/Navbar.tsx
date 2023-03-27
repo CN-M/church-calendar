@@ -26,7 +26,7 @@ const Navbar = () => {
         <a 
         onClick={sessionData ? () => void signOut() : () => void signIn()}
           >
-        {sessionData ? "Sign out" : "Sign In/Sign Up"}
+        {sessionData ? "Sign Out" : "Sign In"}
         </a>
       </div>
       <div className={burger}>
