@@ -12,7 +12,8 @@ const Navbar = () => {
         <Link href="/">CRC</Link>
       </div>
       <div className={middleNav}>
-        <p>{sessionData && <span>Logged in as {sessionData.user?.name}</span>}</p>
+        {/* <p>{sessionData && <span>Logged in as {sessionData.user?.name}</span>}</p> */}
+        <p>{sessionData && <span>{sessionData.user?.name}</span>}</p>
       </div>
       <ul className={navLinks}>
         <Link href="/tithe">Tithe</Link>

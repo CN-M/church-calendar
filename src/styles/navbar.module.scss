@@ -83,19 +83,19 @@ $tertiary-color: #b38add;;
     }
   }
 
-  .burger {
-    display: none;
-    cursor: pointer;
-    padding: 0 2rem;
+  // .burger {
+  //   display: none;
+  //   cursor: pointer;
+  //   padding: 0 2rem;
 
-    div {
-      width: 25px;
-      height: 3px;
-      background-color: $secondary-color;
-      margin: 5px;
-      transition: all 0.3s ease;
-    }
-  }
+  //   div {
+  //     width: 25px;
+  //     height: 3px;
+  //     background-color: $secondary-color;
+  //     margin: 5px;
+  //     transition: all 0.3s ease;
+  //   }
+  // }
 
   @media screen and (max-width: 1024px) {
     .navLinks {
