@@ -39,9 +39,11 @@ const Navbar = () => {
       <div className={signInLink}>
         <div className={userDetails}>
             {
-              sessionData && (
-                <Image 
-                  src={sessionData?.user.image || defaultProfilePicture } 
+              (sessionData && sessionData?.user.image) && (
+                // <Image 
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={sessionData?.user.image} 
                   alt={`${sessionData?.user.name} Profile Pciture`} 
                   width={30}
                   height={30}
