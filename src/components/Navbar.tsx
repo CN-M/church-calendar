@@ -2,7 +2,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import styles from '../styles/navbar.module.scss'
 import Link from "next/link";
 import Image from "next/image";
-import AnishaProfilePicture from "../assets/avatar-anisha.png"
+import defaultProfilePicture from "../assets/download.png"
 import { useState } from "react";
 const { nav, mobileMenu, hiddenMenu, activeDrawer, logo, middleNav, navLinks, signInLink, burger, hamburgerTop, hamburgerMiddle, hamburgerBottom, userDetails, open } = styles;
 
@@ -39,9 +39,9 @@ const Navbar = () => {
       <div className={signInLink}>
         <div className={userDetails}>
             {
-              ( sessionData && sessionData?.user.image ) && (
+              sessionData && (
                 <Image 
-                  src={sessionData?.user.image || AnishaProfilePicture } 
+                  src={sessionData?.user.image || defaultProfilePicture } 
                   alt={`${sessionData?.user.name} Profile Pciture`} 
                   width={30}
                   height={30}
