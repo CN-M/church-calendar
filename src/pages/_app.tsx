@@ -3,7 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 
-import { api } from "~/utils/api";
+import { api } from "src/utils/api";
 
 import "~/styles/globals.scss";
 

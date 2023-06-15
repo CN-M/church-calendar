@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { type NextPage } from "next";
 
-import { api } from "~/utils/api";
+import { api } from "src/utils/api";
 import toast from "react-hot-toast";
 
 const Tithe: NextPage = () => {

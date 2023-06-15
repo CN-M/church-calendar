@@ -7,8 +7,8 @@ import {
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "~/env.mjs";
-import { prisma } from "~/server/db";
+import { env } from "src/env.mjs";
+import { prisma } from "src/server/db";
 
 type UserRole = 'PEDESTRIAN' | 'EDITOR' | 'ARCHITECT';
 

@@ -1,5 +1,5 @@
-import { createTRPCRouter } from "~/server/api/trpc";
-import { exampleRouter } from "~/server/api/routers/example";
+import { createTRPCRouter } from "src/server/api/trpc";
+import { exampleRouter } from "src/server/api/routers/example";
 import { eventRouter } from "./routers/event";
 import { userRouter } from "./routers/user";
 import { titheRouter } from "./routers/tithe";

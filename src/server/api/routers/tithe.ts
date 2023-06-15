@@ -3,9 +3,9 @@ import axios from "axios";
 import {
   createTRPCRouter,
   publicProcedure,
-} from "~/server/api/trpc";
+} from "src/server/api/trpc";
 
-import { env } from "~/env.mjs";
+import { env } from "src/env.mjs";
 import { type Payment } from "~/types/types";
 
 const { YOCO_KEY } = env;

@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import styles from '../styles/manage.module.scss';
 
-import { api } from '~/utils/api';
+import { api } from 'src/utils/api';
 
 interface User {
   id: string;

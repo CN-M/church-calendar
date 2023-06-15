@@ -1,7 +1,7 @@
 import { type FormEvent, useState, type KeyboardEvent } from "react"
 import { FaChevronRight, FaChevronLeft, FaTimes, FaPlus } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
-import { api } from "~/utils/api";
+import { api } from "src/utils/api";
 import { toast } from "react-hot-toast";
 import styles from '../styles/Calendar.module.scss'
 import {

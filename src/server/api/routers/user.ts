@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { env } from "~/env.mjs";
+import { env } from "src/env.mjs";
 import { 
      createTRPCRouter,
      protectedProcedure

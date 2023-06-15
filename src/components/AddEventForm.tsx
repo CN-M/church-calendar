@@ -1,6 +1,6 @@
 import styles from '../styles/Calendar.module.scss'
 import { type FormEvent, useState, type KeyboardEvent } from "react"
-import { api } from "~/utils/api";
+import { api } from "src/utils/api";
 
 import { format } from 'date-fns'
 import { toast } from 'react-hot-toast';
